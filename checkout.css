@@ -172,5 +172,8 @@ body::after {
     }
 }
 
-/* Existing cart item styles remain */
-.cart
+@media (max-width: 768px) {
+     .checkout-container {
+       grid-template-columns: 1fr;
+     }
+   }
