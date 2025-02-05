@@ -1,23 +1,14 @@
 /* checkout.css */
 body {
-    background: #0f172a; /* Dark base color */
+    background: #0f172a;
     min-height: 100vh;
     color: #e2e8f0;
     font-family: 'Segoe UI', system-ui, sans-serif;
+    overflow-x: hidden;
+    box-sizing: border-box;
 }
 
-.checkout-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
-    position: relative;
-    overflow: hidden;
-}
-
-/* Crypto-themed animated background effect */
+/* Animated background effects */
 body::before {
     content: '';
     position: fixed;
@@ -27,43 +18,15 @@ body::before {
     height: 100%;
     background: 
         linear-gradient(45deg, 
-            rgba(247, 147, 30, 0.05) 0%, /* Bitcoin orange */
-            rgba(79, 89, 220, 0.05) 50%, /* Ethereum blue */
-            rgba(40, 167, 69, 0.05) 100% /* Crypto green */
+            rgba(247, 147, 30, 0.05) 0%,
+            rgba(79, 89, 220, 0.05) 50%,
+            rgba(40, 167, 69, 0.05) 100%
         ),
         radial-gradient(circle at 50% 50%, 
             rgba(255, 255, 255, 0.02) 0%,
             rgba(0, 0, 0, 0) 100%
         );
     z-index: -1;
-}
-
-.cart-summary,
-.crypto-payment {
-    background: rgba(15, 23, 42, 0.95); /* Dark semi-transparent background */
-    backdrop-filter: blur(10px);
-    border-radius: 16px;
-    padding: 2rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-}
-
-.crypto-card {
-    background: rgba(30, 41, 59, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.3s ease;
-}
-
-.crypto-card.active {
-    border-color: #3b82f6; /* Bright blue accent */
-    background: rgba(59, 130, 246, 0.1);
-    box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
-}
-
-/* Add subtle particle animation */
-@keyframes particles {
-    from { background-position: 0 0; }
-    to { background-position: 1000px 1000px; }
 }
 
 body::after {
@@ -79,7 +42,26 @@ body::after {
     animation: particles 120s linear infinite;
 }
 
-/* Add/update these styles in checkout.css */
+.checkout-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.cart-summary,
+.crypto-payment {
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Cart Item Styles */
 .cart-item {
     display: flex;
     align-items: center;
@@ -97,7 +79,6 @@ body::after {
     height: 100px;
     border-radius: 8px;
     overflow: hidden;
-    position: relative;
     background: rgba(255, 255, 255, 0.05);
     padding: 5px;
 }
@@ -112,13 +93,17 @@ body::after {
 
 .item-details {
     flex: 1;
-    min-width: 0; /* Prevent text overflow */
+    min-width: 0;
+    overflow: hidden;
 }
 
 .item-details h3 {
-    margin: 0 0 0.5rem 0;
+    margin: 0 0 0.5rem;
     font-size: 1.1rem;
     color: #f8fafc;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .item-details p {
@@ -135,13 +120,50 @@ body::after {
     display: block;
 }
 
-/* Hover effects */
-.cart-item:hover img {
-    transform: scale(1.05);
+/* Crypto Payment Styles */
+.crypto-options {
+    transition: all 0.3s ease;
 }
 
-/* Responsive adjustments */
+.crypto-card {
+    background: rgba(30, 41, 59, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border-radius: 12px;
+}
+
+.crypto-card.active {
+    border-color: #3b82f6;
+    background: rgba(59, 130, 246, 0.1);
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+}
+
+.wallet-address {
+    font-size: 0.85rem;
+    word-break: break-all;
+}
+
+.qr-code {
+    margin-top: 1rem;
+    max-width: 150px;
+}
+
+/* Animations */
+@keyframes particles {
+    from { background-position: 0 0; }
+    to { background-position: 1000px 1000px; }
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
+    .checkout-container {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+        gap: 1.5rem;
+    }
+    
     .cart-item-image-wrapper {
         width: 80px;
         height: 80px;
@@ -157,23 +179,49 @@ body::after {
 }
 
 @media (max-width: 480px) {
-    .cart-item {
-        gap: 1rem;
+    .checkout-container {
+        padding: 0.5rem;
+    }
+    
+    .cart-summary,
+    .crypto-payment {
         padding: 1rem;
+        border-radius: 12px;
+    }
+    
+    .cart-item {
+        gap: 0.75rem;
+        padding: 0.75rem;
     }
     
     .cart-item-image-wrapper {
         width: 70px;
         height: 70px;
+        padding: 3px;
     }
     
-    .item-details p {
-        font-size: 0.85rem;
+    .item-details h3 {
+        font-size: 0.95rem;
+    }
+    
+    .price {
+        font-size: 1rem;
+    }
+    
+    .crypto-card {
+        padding: 1rem;
+    }
+    
+    .wallet-address {
+        font-size: 0.75rem;
+    }
+    
+    .qr-code {
+        max-width: 120px;
     }
 }
 
-@media (max-width: 768px) {
-     .checkout-container {
-       grid-template-columns: 1fr;
-     }
-   }
+/* Hover Effects */
+.cart-item:hover img {
+    transform: scale(1.05);
+}
